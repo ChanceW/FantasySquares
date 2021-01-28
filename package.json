@@ -2,7 +2,10 @@
   "name": "Elastic-Beanstalk-Sample-App",
   "version": "0.0.1",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.11.13"
+  },
   "scripts": {
     "start": "node app.js"
   }

@@ -1,4 +1,8 @@
-let players = ["Chance","Alex"];
+let players = [];
+let q1Positons = [];
+let q2Positons = [];
+let q3Positons = [];
+let q4Positons = [];
 
 function drawTable(id){
     let table = $(`#${id} tbody`);
@@ -26,14 +30,39 @@ function drawBody(table){
 
 function play(){
     $(".position").addClass("bg-dark").text("");
-    const q1Positons = generatePositions();
-    const q2Positons = generatePositions();
-    const q3Positons = generatePositions();
-    const q4Positons = generatePositions();
-    populateTable("q1" , q1Positons);
-    populateTable("q2" , q2Positons);
-    populateTable("q3" , q3Positons);
-    populateTable("q4" , q4Positons);
+    $(".play.btn").addClass("disabled");
+
+    q1Positons = generatePositions();
+    q2Positons = generatePositions();
+    q3Positons = generatePositions();
+    q4Positons = generatePositions();
+    fetch('positions', {
+        method: "Post", 
+        headers: {
+           'Content-Type': 'application/json',
+         },
+        body: JSON.stringify([{name:"q1",positions:q1Positons},{name:"q2",positions:q2Positons},{name:"q3",positions:q3Positons},{name:"q4",positions:q4Positons}])
+       })
+        .then(response => {
+            populateTables()
+            $(".play.btn").removeClass("disabled");
+        });
+}
+
+function populateTables(){
+    fetch('positions')
+        .then(response => response.json())
+        .then(data => {
+            q1Positons = data.filter(q => q.name === "q1")[0].positions;
+            q2Positons = data.filter(q => q.name === "q2")[0].positions;
+            q3Positons = data.filter(q => q.name === "q3")[0].positions;
+            q4Positons = data.filter(q => q.name === "q4")[0].positions;
+
+            populateTable("q1" , q1Positons);
+            populateTable("q2" , q2Positons);
+            populateTable("q3" , q3Positons);
+            populateTable("q4" , q4Positons);
+        });
 }
 
 function generatePositions(){
@@ -48,7 +77,7 @@ function generatePositions(){
             let randomP = `r${r}c${c}`;
 
             if(!Object.keys(result).includes(randomP)){
-                result[randomP] = players[idx];
+                result[randomP] = players[idx].name;
                 playerPositions++;
             }
         }
@@ -65,32 +94,62 @@ function populateTable(id, positions){
     }
 }
 
-drawTable("q1");
-drawTable("q2");
-drawTable("q3");
-drawTable("q4");
-
-
-function addPlayers(){
-    let list = $("<ul></ul>");
-    players.forEach(player => {
-        list.append(`<li>${player}</li>`);
-    });
-    $(".card-body ul").html(list);
+function DrawTables(){
+    drawTable("q1");
+    drawTable("q2");
+    drawTable("q3");
+    drawTable("q4");
 }
-addPlayers();
+
+function populatePlayers(){
+    $(".card-body").html("<div class='spinner-border text-primary' role='status'><span class='sr-only'>Loading...</span></div>");
+    fetch('players')
+        .then(response => response.json())
+        .then(data => {
+            players = data;
+            let list = $("<ul></ul>");
+            players.forEach(player => {
+            list.append(`<li>${player.name}</li>`);
+            $(".card-body").html(list);
+            });
+        });
+}
 
 function join(){
-    players.push($("#joinModal #playerName").val().toLowerCase());
-    $(".playerName").val('');
-    addPlayers();
+    let name = $("#joinModal #playerName").val().toLowerCase();
+    fetch('players', {
+         method: "PUT", 
+         headers: {
+            'Content-Type': 'text/plain',
+          },
+         body: name 
+        })
+        .then(response => {
+            $(".playerName").val('');
+            populatePlayers();
+            DrawTables()
+        });
 }
 
 function remove(){
     let name = $("#removeModal #playerName").val().toLowerCase();
-    players = players.filter(p => {
-        return p !== name;
-    });
-    $(".playerName").val('');
-    addPlayers();
+    fetch('players', {
+         method: "DELETE", 
+         headers: {
+            'Content-Type': 'text/plain',
+          },
+         body: name 
+        })
+        .then(response => {
+            $(".playerName").val('');
+            populatePlayers();
+            DrawTables()
+        });
 }
+
+function lock(){
+}
+
+DrawTables();
+populatePlayers();
+populateTables()

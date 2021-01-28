@@ -127,7 +127,6 @@ function join(){
         .then(response => {
             $(".playerName").val('');
             populatePlayers();
-            DrawTables()
         });
 }
 
@@ -143,7 +142,6 @@ function remove(){
         .then(response => {
             $(".playerName").val('');
             populatePlayers();
-            DrawTables()
         });
 }
 

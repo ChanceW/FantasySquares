@@ -26,7 +26,7 @@ var server = http.createServer(function (req, res) {
             res.end();
         });
     } else {
-        html = req.url.startsWith("/img/") ? fs.readFileSync(req.url.substring(1)) : fs.readFileSync('index.html');;
+        html = (req.url.startsWith("/img/") || req.url.startsWith("/css/") || req.url.startsWith("/js/")) ? fs.readFileSync(req.url.substring(1)) : fs.readFileSync('index.html');;
         res.writeHead(200);
         res.write(html);
         res.end();

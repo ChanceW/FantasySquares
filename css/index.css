@@ -1,0 +1,26 @@
+body{
+    font-family: 'Bungee Inline', cursive;
+   }
+
+header{
+background: url(/img/football.jpg);
+background-size: cover;
+background-position-y: 30%;
+color: antiquewhite;
+}
+
+li{
+    display: inline;
+    margin: 5px;
+    color: darkred;
+}
+
+.stick
+{
+    position:sticky;
+    left:0px;
+}
+
+.bg-dark{
+    color: white;
+}

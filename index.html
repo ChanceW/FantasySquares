@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap" rel="stylesheet">
+    <link rel="icon" href="img/footballIcon.png">
+    <title>Super Bowl Squares</title>
+</head>
+<body>
+    
+    <header class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 col-sm-3 col-md-2 align-self-center">
+                    <img src="img/sb.jpg" class="img-fluid" />
+                 </div>
+                <div class="col">
+                    <h1>Super Bowl Squares</h1>
+                    <h2>Time to loose yo money!</h2>
+                </div>
+                <div class="col col-md-4 col-xl-2 mt-4 text-xs-center">
+                    <a class="btn btn-info" onclick="play()">Shuffle</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container p-sm-10">
+        <div class="row">
+            <div class="card">
+                <h3 class="card-header">Players</h3>
+                <div class="card-body">
+                    <ul></ul>
+                    <button class="btn btn-danger float-right mx-2 btn-sm" role="button" data-toggle="modal" data-target="#removeModal">-</button>
+                    <button class="btn btn-success float-right mx-2 btn-sm" role="button" data-toggle="modal" data-target="#joinModal">+</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h4 class="mt-5">First Quarter</h4>
+            <div class="table-responsive">
+                <table id="q1" class="table table-bordered table-striped"><tbody></tbody></table>
+            </div>
+        </div>
+        <div class="row">
+            <h4 class="mt-5">Second Quarter</h4>
+            <div class="table-responsive">
+                <table id="q2" class="table table-bordered table-striped"><tbody></tbody></table>
+            </div>
+        </div>
+        <div class="row">
+            <h4 class="mt-5">Third Quarter</h4>
+            <div class="table-responsive">
+                <table id="q3" class="table table-bordered table-striped"><tbody></tbody></table>
+            </div>
+        </div>
+        <div class="row">
+            <h4 class="mt-5">Fourth Quarter</h4>
+            <div class="table-responsive">
+                <table id="q4" class="table table-bordered table-striped"><tbody></tbody></table>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        let players = ["arod", "los", "chance", "orlando", "jonas", "sammy"];
+        function drawTable(id){
+            let table = $(`#${id} tbody`);
+            drawHeader(table);
+            drawBody(table);
+        }
+
+        function drawHeader(table){
+            let headerRow = $("<tr><th></th></tr>");
+            for(let i = 0; i < 10; i++){
+                headerRow.append(`<th>${i}</th>`);
+            }
+            table.append(headerRow);
+        }
+
+        function drawBody(table){
+            for(let r = 0; r < 10; r++){
+                let row = $(`<tr><th class='stick bg-dark'>${r}</th></tr>`);
+                for(let c = 0; c < 10; c++){
+                    row.append(`<td class="position r${r}c${c} bg-dark"></td>`);
+                }
+                table.append(row);
+            }
+        }
+
+        function play(){
+            $(".position").addClass("bg-dark").text("");
+            const q1Positons = generatePositions();
+            const q2Positons = generatePositions();
+            const q3Positons = generatePositions();
+            const q4Positons = generatePositions();
+            populateTable("q1" , q1Positons);
+            populateTable("q2" , q2Positons);
+            populateTable("q3" , q3Positons);
+            populateTable("q4" , q4Positons);
+        }
+
+        function generatePositions(){
+            const allowedPositions = Math.floor(100 / players.length);
+            let result = {};
+            for (let idx in players){
+                let playerPositions = 0;
+                while(playerPositions < allowedPositions)
+                {
+                    let r = Math.floor(Math.random() * 10);
+                    let c = Math.floor(Math.random() * 10);
+                    let randomP = `r${r}c${c}`;
+
+                    if(!Object.keys(result).includes(randomP)){
+                        result[randomP] = players[idx];
+                        playerPositions++;
+                    }
+                }
+            }
+            return result;
+        }
+
+        function populateTable(id, positions){
+            for(let key in positions)
+            {
+                let cell = $(`#${id} .${key}`);
+                cell.text(positions[key]);
+                cell.removeClass("bg-dark");
+            }
+        }
+
+        drawTable("q1");
+        drawTable("q2");
+        drawTable("q3");
+        drawTable("q4");
+        
+
+        function addPlayers(){
+            let list = $("<ul></ul>");
+            players.forEach(player => {
+                list.append(`<li>${player}</li>`);
+            });
+            $(".card-body ul").html(list);
+        }
+        addPlayers();
+
+        function join(){
+            players.push($("#joinModal #playerName").val().toLowerCase());
+            $(".playerName").val('');
+            addPlayers();
+        }
+
+        function remove(){
+            let name = $("#removeModal #playerName").val().toLowerCase();
+            players = players.filter(p => {
+                return p !== name;
+            });
+            $(".playerName").val('');
+            addPlayers();
+        }
+    </script>
+    <style>
+        body{
+         font-family: 'Bungee Inline', cursive;
+        }
+ 
+        header{
+         background: url(img/football.jpg);
+         background-size: cover;
+         background-position-y: 25%;
+        }
+ 
+        li{
+            display: inline;
+            margin: 5px;
+            color: darkred;
+        }
+
+        .stick
+        {
+            position:sticky;
+            left:0px;
+        }
+
+        .bg-dark{
+            color: white;
+        }
+     </style>
+
+    <div id="joinModal" class="modal fade" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Enter Player</h3>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="sr-only" for="playerName">Name</label>
+                                    <input type="playerName" class="form-control form-control-sm playerName" id="playerName" placeholder="Player Name">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <button class="btn btn-success btn-sm ml-1" role="button" data-toggle="modal" data-target="#joinModal" onclick="join();return false">Join</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="removeModal" class="modal fade" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Remove Player</h3>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="sr-only" for="playerName">Name</label>
+                                    <input type="playerName" class="form-control form-control-sm playerName" id="playerName" placeholder="Player Name">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <button class="btn btn-danger btn-sm ml-1" role="button" data-toggle="modal" data-target="#removeModal" onclick="remove();return false">Remove</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

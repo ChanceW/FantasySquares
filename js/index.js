@@ -53,15 +53,19 @@ function populateTables(){
     fetch('positions')
         .then(response => response.json())
         .then(data => {
-            q1Positons = data.filter(q => q.name === "q1")[0].positions;
-            q2Positons = data.filter(q => q.name === "q2")[0].positions;
-            q3Positons = data.filter(q => q.name === "q3")[0].positions;
-            q4Positons = data.filter(q => q.name === "q4")[0].positions;
+            if(data.length)
+            {
+                q1Positons = data.filter(q => q.name === "q1")[0].positions;
+                q2Positons = data.filter(q => q.name === "q2")[0].positions;
+                q3Positons = data.filter(q => q.name === "q3")[0].positions;
+                q4Positons = data.filter(q => q.name === "q4")[0].positions;
 
-            populateTable("q1" , q1Positons);
-            populateTable("q2" , q2Positons);
-            populateTable("q3" , q3Positons);
-            populateTable("q4" , q4Positons);
+                populateTable("q1" , q1Positons);
+                populateTable("q2" , q2Positons);
+                populateTable("q3" , q3Positons);
+                populateTable("q4" , q4Positons);
+            }
+            
         });
 }
 

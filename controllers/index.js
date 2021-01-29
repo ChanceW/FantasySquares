@@ -78,7 +78,7 @@ const positions = (req, res) => {
                 });           
             });
             break;
-        case 'Post':
+        case 'POST':
             var body = '';
 
             req.on('data', function(chunk) {

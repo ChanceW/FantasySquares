@@ -13,14 +13,14 @@ function drawTable(id){
 function drawHeader(table){
     let headerRow = $("<tr><th></th></tr>");
     for(let i = 0; i < 10; i++){
-        headerRow.append(`<th>${i}</th>`);
+        headerRow.append(`<th class="bg-tampa">${i}</th>`);
     }
     table.append(headerRow);
 }
 
 function drawBody(table){
     for(let r = 0; r < 10; r++){
-        let row = $(`<tr><th class='stick bg-dark'>${r}</th></tr>`);
+        let row = $(`<tr><th class='stick bg-kansas'>${r}</th></tr>`);
         for(let c = 0; c < 10; c++){
             row.append(`<td class="position r${r}c${c} bg-dark"></td>`);
         }
@@ -106,7 +106,8 @@ function DrawTables(){
 }
 
 function populatePlayers(shuffleBoard){
-    $(".card-body").html("<div class='spinner-border text-primary' role='status'><span class='sr-only'>Loading...</span></div>");
+    let playersCard = $(".players .card-body");
+    playersCard.html("<div class='spinner-border text-primary' role='status'><span class='sr-only'>Loading...</span></div>");
     fetch('players')
         .then(response => response.json())
         .then(data => {
@@ -115,7 +116,7 @@ function populatePlayers(shuffleBoard){
             let list = $("<ul></ul>");
             players.forEach(player => {
             list.append(`<li>${player.name}</li>`);
-            $(".card-body").html(list);
+            playersCard.html(list);
             });
         });
 }

@@ -105,12 +105,13 @@ function DrawTables(){
     drawTable("q4");
 }
 
-function populatePlayers(){
+function populatePlayers(shuffleBoard){
     $(".card-body").html("<div class='spinner-border text-primary' role='status'><span class='sr-only'>Loading...</span></div>");
     fetch('players')
         .then(response => response.json())
         .then(data => {
             players = data;
+            if(shuffleBoard){ play(); }
             let list = $("<ul></ul>");
             players.forEach(player => {
             list.append(`<li>${player.name}</li>`);
@@ -130,7 +131,7 @@ function join(){
         })
         .then(response => {
             $(".playerName").val('');
-            populatePlayers();
+            populatePlayers(true);
         });
 }
 
@@ -145,7 +146,7 @@ function remove(){
         })
         .then(response => {
             $(".playerName").val('');
-            populatePlayers();
+            populatePlayers(true);
         });
 }
 

@@ -13,7 +13,7 @@ function drawTable(id){
 }
 
 function drawHeader(table){
-    let headerRow = $(`<tr><th>${"&nbsp;".repeat(20)}</th></tr>`);
+    let headerRow = $(`<tr><th>${"&nbsp;".repeat(10)}</th></tr>`);
     for(let i = 0; i < 10; i++){
         headerRow.append(`<th class="bg-tampa">${i}</th>`);
     }

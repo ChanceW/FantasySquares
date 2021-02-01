@@ -4,6 +4,8 @@ let q2Positons = [];
 let q3Positons = [];
 let q4Positons = [];
 
+const loading = "<div class='spinner-border text-primary' role='status'><span class='sr-only'>Loading...</span></div>";
+
 function drawTable(id){
     let table = $(`#${id} tbody`);
     drawHeader(table);
@@ -11,7 +13,7 @@ function drawTable(id){
 }
 
 function drawHeader(table){
-    let headerRow = $("<tr><th></th></tr>");
+    let headerRow = $(`<tr><th>${"&nbsp;".repeat(20)}</th></tr>`);
     for(let i = 0; i < 10; i++){
         headerRow.append(`<th class="bg-tampa">${i}</th>`);
     }
@@ -107,7 +109,7 @@ function DrawTables(){
 
 function populatePlayers(shuffleBoard){
     let playersCard = $(".players .card-body");
-    playersCard.html("<div class='spinner-border text-primary' role='status'><span class='sr-only'>Loading...</span></div>");
+    playersCard.html(loading);
     fetch('players')
         .then(response => response.json())
         .then(data => {
@@ -151,9 +153,55 @@ function remove(){
         });
 }
 
-function lock(){
+function populateRules(){
+    let list = $("#howToList");
+    list.html(loading);
+    $(".btn.how").addClass("disabled");
+    fetch('rules')
+        .then(response => response.json())
+        .then(resp => {
+            const rules = JSON.parse(resp[0].rules)[0];
+            list.html('');
+            rules.forEach((rule) => {
+                list.append(`<li class='my-2'><span>${rule}</span><input type='text' value='${rule}' /></li>`);
+            });
+            $(".btn.how").removeClass("disabled");
+            $("#howTo").removeClass("edit");
+        });
+}
+
+function editRules(){
+    $("#howTo").addClass("edit"); 
+}
+
+function cancelEdit(){
+    $("#howTo").removeClass("edit"); 
+}
+
+function addRule(){
+    $("#howToList").append("<li class='my-2'><input type='text' value='' /></li>")
+}
+
+function saveRules(){
+    let list = $("#howToList");
+    let newRules = [];
+    list.find("input").each(function() {
+        newRules.push($(this).val());
+    });
+    list.html(loading);
+    fetch('rules', {
+        method: "PUT", 
+        headers: {
+           'Content-Type': 'application/json',
+         },
+        body: JSON.stringify([newRules])
+       })
+        .then(response => {
+            populateRules();
+        });
 }
 
 DrawTables();
 populatePlayers();
 populateTables()
+populateRules();

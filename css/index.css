@@ -47,3 +47,15 @@ color: antiquewhite;
 .positions th, .positions td{
     text-align: center;
 }
+
+#howTo input, #howTo .save, #howTo .addRule{
+    display: none;
+}
+
+#howTo.edit input, #howTo.edit .save, #howTo.edit .addRule{
+    display: block;
+}
+
+#howTo.edit li span{
+    display: none;
+}

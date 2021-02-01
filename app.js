@@ -15,6 +15,9 @@ var server = http.createServer(function (req, res) {
     else if(req.url === "/positions"){
         controller.positions(req, res);
     }
+    else if(req.url === "/rules"){
+        controller.rules(req, res);
+    }
     else{
         html = (req.url.startsWith("/img/") || req.url.startsWith("/css/") || req.url.startsWith("/js/")) ? fs.readFileSync(req.url.substring(1)) : fs.readFileSync('index.html');
         res.writeHead(200);

@@ -186,7 +186,11 @@ function saveRules(){
     let list = $("#howToList");
     let newRules = [];
     list.find("input").each(function() {
-        newRules.push($(this).val());
+        let rule = $(this).val();
+        if(rule)
+        {
+            newRules.push(rule);
+        }
     });
     list.html(loading);
     fetch('rules', {

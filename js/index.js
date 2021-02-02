@@ -117,8 +117,9 @@ function populatePlayers(shuffleBoard){
             if(shuffleBoard){ play(); }
             let list = $("<ul></ul>");
             players.forEach(player => {
-            list.append(`<li>${player.name}</li>`);
-            playersCard.html(list);
+                list.append(`<li>${player.name}</li>`);
+                playersCard.html(list);
+                playersCard.append(`<div class='text-center'>Current Quarterly Payout = <span= class="text-success">$${(players.length * 20) / players.length }</span></div>`);
             });
         });
 }

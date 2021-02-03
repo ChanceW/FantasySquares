@@ -155,7 +155,7 @@ const auth = (req, res) => {
 
             req.on('end', function() {
                 const user =JSON.parse(body);
-                const isAdmin = user.uName === "admin";
+                const isAdmin = user.uName === "elise";
                 html = JSON.stringify({isAdmin: isAdmin});
                 res.writeHead(200);
                 res.write(html);

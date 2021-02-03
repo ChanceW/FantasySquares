@@ -31,14 +31,14 @@ function login(){
 
 function checklock(){
     if(savedSettings.isLocked === "true"){
-        $("#btnlock").addClass("active");
-        $("#btnunlock").removeClass("active");
+        $("#btnLock").addClass("active");
+        $("#btnUnlock").removeClass("active");
         $(".btn.remove, .btn.add").addClass("d-none");
         $(".btn.lock").removeClass("d-none");
     }
     else{
-        $("#btnlock").removeClass("active");
-        $("#btnunlock").addClass("active");
+        $("#btnLock").removeClass("active");
+        $("#btnUnlock").addClass("active");
         $(".btn.remove, .btn.add").removeClass("d-none");
         $(".btn.lock").addClass("d-none");
     } 
@@ -104,6 +104,7 @@ function populateTables(){
                 populateTable("q2" , q2Positons);
                 populateTable("q3" , q3Positons);
                 populateTable("q4" , q4Positons);
+                getSettings();
             }
             
         });
@@ -251,6 +252,7 @@ function getSettings(){
        .then(resp => {
            savedSettings = resp;
            checklock();
+           manageScores();
        });
 }
 
@@ -274,8 +276,43 @@ function saveSettings(){
         });
 }
 
+function manageScores(){
+    $("h4 div").html("");
+    let q1Scores = savedSettings.q1.split(":");
+    let q2Scores = savedSettings.q2.split(":");
+    let q3Scores = savedSettings.q3.split(":");
+    let q4Scores = savedSettings.q4.split(":");
+    if(q1Scores[0] && q1Scores[1])
+    {
+        const position = `r${q1Scores[0] % 10}c${q1Scores[1] % 10}`;
+        const winner = $("#q1 ." + position).text();
+        $("#q1 ." + position).css({background:"#28a745"});
+        $("#q1Header div").html(`Tampa ${q1Scores[1]} / Kasans ${q1Scores[0]} = Winner ${winner}`);
+    }
+    if(q2Scores[0] && q2Scores[1])
+    {
+        const position = `r${q2Scores[0] % 10}c${q2Scores[1] % 10}`;
+        const winner = $("#q2 ." + position).text();
+        $("#q2 ." + position).css({background:"#28a745"});
+        $("#q2Header div").html(`Tampa ${q2Scores[1]} / Kasans ${q2Scores[0]} = Winner ${winner}`);
+    }
+    if(q3Scores[0] && q3Scores[1])
+    {
+        const position = `r${q3Scores[0] % 10}c${q3Scores[1] % 10}`;
+        const winner = $("#q3 ." + position).text();
+        $("#q3 ." + position).css({background:"#28a745"});
+        $("#q3Header div").html(`Tampa ${q3Scores[1]} / Kasans ${q3Scores[0]} = Winner ${winner}`);
+    }
+    if(q4Scores[0] && q4Scores[1])
+    {
+        const position = `r${q4Scores[0] % 10}c${q4Scores[1] % 10}`;
+        const winner = $("#q4 ." + position).text();
+        $("#q4 ." + position).css({background:"#28a745"});
+        $("#q4Header div").html(`Tampa ${q4Scores[1]} / Kasans ${q4Scores[0]} = Winner ${winner}`);
+    }
+}
+
 DrawTables();
-getSettings();
 populatePlayers();
 populateTables()
 populateRules();

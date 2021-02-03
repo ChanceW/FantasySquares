@@ -27,10 +27,19 @@
             </div>
         </div>
     </header>
+    <div class="row w-100 m-0" style="background-color: #eee;">
+        <div class="col text-right p-0">
+            <button class="btn btn-light"  data-toggle="modal" data-target="#loginModal"><i class="fa fa-sign-in" aria-hidden="true"></i></button></div>
+        </div>
     <div class="container px-4 p-sm-0">
         <div class="row text-center my-4">
             <div class="col text-center">
-                <button class="btn btn-info how disabled" data-toggle="modal" data-target="#howTo">how it works</button>
+                <button class="btn btn-info how" data-toggle="modal" data-target="#howTo">how it works</button>
+            </div>
+        </div>
+        <div class="adminRow row text-center my-4 d-none">
+            <div class="col text-center">
+                <button class="btn btn-warning how" data-toggle="modal" data-target="#adminModal">Manage Squares</button>
             </div>
         </div>
         <div class="row text-center">
@@ -42,8 +51,9 @@
             <div class="card w-100 players">
                 <h3 class="card-header">
                     Players
-                    <button class="btn btn-danger float-right mx-2 btn-sm" role="button" data-toggle="modal" data-target="#removeModal">-</button>
-                    <button class="btn btn-success float-right mx-2 btn-sm" role="button" data-toggle="modal" data-target="#joinModal">+</button>
+                    <button class="remove d-none btn btn-danger float-right mx-2 btn-sm" role="button" data-toggle="modal" data-target="#removeModal"><i class="fa fa-minus-square" aria-hidden="true"></i></button>
+                    <button class="add d-none btn btn-success float-right mx-2 btn-sm" role="button" data-toggle="modal" data-target="#joinModal"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                    <button class="lock btn btn-secondary float-right mx-2 btn-sm disabled"><i class="fa fa-lock" aria-hidden="true"></i></button>
                 </h3>
                 <div class="card-body">
                     <ul></ul>
@@ -63,26 +73,26 @@
                 </ul>
             </div>
         </div>
-        <div class="row">
-            <h4 class="mt-5">First Quarter</h4>
+        <div class="row mt-4">
+            <h4>First Quarter</h4>
             <div class="table-responsive">
                 <table id="q1" class="positions table table-bordered table-striped"><tbody></tbody></table>
             </div>
         </div>
-        <div class="row">
-            <h4 class="mt-5">Second Quarter</h4>
+        <div class="row mt-4">
+            <h4>Second Quarter</h4>
             <div class="table-responsive">
                 <table id="q2" class="positions table table-bordered table-striped"><tbody></tbody></table>
             </div>
         </div>
-        <div class="row">
-            <h4 class="mt-5">Third Quarter</h4>
+        <div class="row mt-4">
+            <h4>Third Quarter</h4>
             <div class="table-responsive">
                 <table id="q3" class="positions table table-bordered table-striped"><tbody></tbody></table>
             </div>
         </div>
-        <div class="row">
-            <h4 class="mt-5">Fourth Quarter</h4>
+        <div class="row mt-4">
+            <h4>Fourth Quarter</h4>
             <div class="table-responsive">
                 <table id="q4" class="positions table table-bordered table-striped"><tbody></tbody></table>
             </div>
@@ -165,7 +175,104 @@
             </div>
           </div>
         </div>
-      </div>
+    </div>
+
+    <div id="loginModal" class="modal fade" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Login</h3>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <label class="sr-only" for="userName">User Name</label>
+                                    <input type="text" class="form-control form-control-sm" id="userName" placeholder="User Name">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <button type="button" class="btn btn-secondary btn-sm ml-auto" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary btn-sm ml-1" onclick="login()">Sign in</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="adminModal" class="modal fade" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Manage Squares</h3>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <form>
+                            <div class="form-group row">
+                                <label for="siteType" class="col-sm-6 col-form-label">Square Locked</label>
+                                <div class="col">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label id="btnlock" for="" class="btn btn-outline-danger">
+                                            <input type="radio" value=true name="squareLock" id="locked" autocomplete="off"> <i class="fa fa-lock" aria-hidden="true"></i>
+                                        </label>
+                                        <label class="btnunlock btn btn-outline-success">
+                                            <input type="radio"  value=false name="squareLock" id="unlocked" autocomplete="off"> <i class="fa fa-unlock" aria-hidden="true"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-6 col-form-label">Scores:</label>
+                            </div>
+                            <div id="q1" class="form-group row">
+                                <label for="siteType" class="col-sm-6 col-form-label">Q1</label>
+                                <div class="col">
+                                    <input type="number" class="d-inline form-control form-control-sm cScore" id="cScore" autocomplete="off" placeholder="TB">
+                                </div>
+                                <div class="col">
+                                    <input type="number" class="d-inline form-control form-control-sm rScore" id="rScore" autocomplete="off" placeholder="KS">
+                                </div>
+                            </div>
+                            <div id="q2" class="form-group row">
+                                <label for="siteType" class="col-sm-6 col-form-label">Q2</label>
+                                <div class="col">
+                                    <input type="number" class="d-inline form-control form-control-sm cScore" id="cScore" autocomplete="off" placeholder="TB">
+                                </div>
+                                <div class="col">
+                                    <input type="number" class="d-inline form-control form-control-sm rScore" id="rScore" autocomplete="off" placeholder="KS">
+                                </div>
+                            </div>
+                            <div id="q3" class="form-group row">
+                                <label for="siteType" class="col-sm-6 col-form-label">Q3</label>
+                                <div class="col">
+                                    <input type="number" class="d-inline form-control form-control-sm cScore" id="cScore" autocomplete="off" placeholder="TB">
+                                </div>
+                                <div class="col">
+                                    <input type="number" class="d-inline form-control form-control-sm rScore" id="rScore" autocomplete="off" placeholder="KS">
+                                </div>
+                            </div>
+                            <div id="q4" class="form-group row">
+                                <label for="siteType" class="col-sm-6 col-form-label">Q4</label>
+                                <div class="col">
+                                    <input type="number" class="d-inline form-control form-control-sm cScore" id="cScore" autocomplete="off" placeholder="TB">
+                                </div>
+                                <div class="col">
+                                    <input type="number" class="d-inline form-control form-control-sm rScore" id="rScore" autocomplete="off" placeholder="KS">
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="saveSettings()" data-dismiss="modal">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
       
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

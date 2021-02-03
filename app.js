@@ -9,7 +9,13 @@ var port = process.env.PORT || 3000,
     html = fs.readFileSync('index.html');
 
 var server = http.createServer(function (req, res) {
-    if(req.url === "/players"){
+    if(req.url === "/auth"){
+        controller.auth(req, res);
+    }
+    else if(req.url === "/settings"){
+        controller.settings(req, res);
+    }
+    else if(req.url === "/players"){
         controller.players(req, res);
     }
     else if(req.url === "/positions"){

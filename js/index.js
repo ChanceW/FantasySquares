@@ -3,8 +3,46 @@ let q1Positons = [];
 let q2Positons = [];
 let q3Positons = [];
 let q4Positons = [];
+let savedSettings = {};
 
 const loading = "<div class='spinner-border text-primary' role='status'><span class='sr-only'>Loading...</span></div>";
+
+function login(){
+    let body = {uName:$("#loginModal #userName").val().toLowerCase()};
+    fetch('auth', {
+        method: "POST", 
+        headers: {
+           'Content-Type': 'application/json',
+         },
+        body: JSON.stringify(body)
+       })
+       .then(response => response.json())
+       .then(data => {
+           if(data.isAdmin)
+           {
+                $("#loginModal").modal("hide");
+                $(".adminRow").removeClass("d-none");
+           }
+           else{
+               alert("Not Admin");
+           }
+       });
+}
+
+function checklock(){
+    if(savedSettings.isLocked === "true"){
+        $("#btnlock").addClass("active");
+        $("#btnunlock").removeClass("active");
+        $(".btn.remove, .btn.add").addClass("d-none");
+        $(".btn.lock").removeClass("d-none");
+    }
+    else{
+        $("#btnlock").removeClass("active");
+        $("#btnunlock").addClass("active");
+        $(".btn.remove, .btn.add").removeClass("d-none");
+        $(".btn.lock").addClass("d-none");
+    } 
+}
 
 function drawTable(id){
     let table = $(`#${id} tbody`);
@@ -119,7 +157,8 @@ function populatePlayers(shuffleBoard){
             players.forEach(player => {
                 list.append(`<li>${player.name}</li>`);
                 playersCard.html(list);
-                playersCard.append(`<div class='text-center'>Current Quarterly Payout = <span= class="text-success">$${(players.length * 20) / players.length }</span></div>`);
+                playersCard.append(`<div class='text-center'>Current Quarterly Payout = <span= class="text-success">$${ (players.length * 20) / players.length }</span></div>`);
+                playersCard.append(`<div class='text-center'>Current Total Pot = <span= class="text-success">$${ players.length * 20 }</span></div>`);
             });
         });
 }
@@ -206,7 +245,37 @@ function saveRules(){
         });
 }
 
+function getSettings(){
+    fetch('settings')
+       .then(response => response.json())
+       .then(resp => {
+           savedSettings = resp;
+           checklock();
+       });
+}
+
+function saveSettings(){
+    let settings = {
+        isLocked: $("[name='squareLock']:checked").val(),
+        q1: `${$("#q1 .rScore").val()}:${$("#q1 .cScore").val()}`,
+        q2: `${$("#q2 .rScore").val()}:${$("#q2 .cScore").val()}`,
+        q3: `${$("#q3 .rScore").val()}:${$("#q3 .cScore").val()}`,
+        q4: `${$("#q4 .rScore").val()}:${$("#q4 .cScore").val()}`,
+    };
+    fetch('settings', {
+        method: "POST", 
+        headers: {
+           'Content-Type': 'application/json',
+         },
+        body: JSON.stringify(settings)
+       })
+        .then(response => {
+            getSettings();
+        });
+}
+
 DrawTables();
+getSettings();
 populatePlayers();
 populateTables()
 populateRules();

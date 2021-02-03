@@ -3,10 +3,14 @@ body{
    }
 
 header{
-background: url(/img/football.jpg);
-background-size: cover;
-background-position-y: 30%;
-color: antiquewhite;
+    background: url(/img/football.jpg);
+    background-size: cover;
+    background-position-y: 30%;
+    color: antiquewhite;
+}
+
+.jumbotron-fluid {
+    margin-bottom: 0;
 }
 
 .players li{
@@ -27,6 +31,7 @@ color: antiquewhite;
 
 .legend ul{
     list-style: none;
+    padding: 0;
 }
 
 .legend li{

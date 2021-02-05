@@ -21,7 +21,7 @@ function login(){
            if(data.isAdmin)
            {
                 $("#loginModal").modal("hide");
-                $(".adminRow").removeClass("d-none");
+                $(".adminRow, .shuffleBtn").removeClass("d-none");
            }
            else{
                alert("Not Admin");
@@ -33,12 +33,14 @@ function checklock(){
     if(savedSettings.isLocked === "true"){
         $("#btnLock").addClass("active");
         $("#btnUnlock").removeClass("active");
+
         $(".btn.remove, .btn.add").addClass("d-none");
         $(".btn.lock").removeClass("d-none");
     }
     else{
         $("#btnLock").removeClass("active");
         $("#btnUnlock").addClass("active");
+
         $(".btn.remove, .btn.add").removeClass("d-none");
         $(".btn.lock").addClass("d-none");
     } 
@@ -158,9 +160,10 @@ function populatePlayers(shuffleBoard){
             players.forEach(player => {
                 list.append(`<li>${player.name}</li>`);
                 playersCard.html(list);
-                playersCard.append(`<div class='text-center'>Current Quarterly Payout = <span= class="text-success">$${ (players.length * 20) / players.length }</span></div>`);
-                playersCard.append(`<div class='text-center'>Current Total Pot = <span= class="text-success">$${ players.length * 20 }</span></div>`);
             });
+            const payout =  players.length * 20;
+            playersCard.append(`<div class='text-center'>Current Quarterly Payout = <span= class="text-success">$${ payout / 4 }</span></div>`);
+            playersCard.append(`<div class='text-center'>Current Total Pot = <span= class="text-success">$${ payout }</span></div>`);
         });
 }
 

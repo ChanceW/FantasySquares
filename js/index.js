@@ -21,7 +21,7 @@ function login(){
            if(data.isAdmin)
            {
                 $("#loginModal").modal("hide");
-                $(".adminRow, .shuffleBtn").removeClass("d-none");
+                $(".adminRow").removeClass("d-none");
            }
            else{
                alert("Not Admin");

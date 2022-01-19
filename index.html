@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="css/index.css" rel="stylesheet">
     <link rel="icon" href="img/footballIcon.png">
     <title>Super Bowl Squares</title>
 </head>
+
 <body>
-    
+
     <header class="jumbotron jumbotron-fluid">
         <div class="container">
             <div class="row">
                 <div class="col-4 col-sm-3 col-md-2 align-self-center">
-                    <img src="img/sb.jpg" class="img-fluid" />
-                 </div>
+                    <img src="img/sb56.png" class="img-fluid" />
+                </div>
                 <div class="col">
                     <h1>Super Bowl Squares</h1>
                     <h2>Time to loose yo money!</h2>
@@ -29,8 +34,10 @@
     </header>
     <div class="row w-100 m-0" style="background-color: #eee;">
         <div class="col text-right p-0">
-            <button class="btn btn-light"  data-toggle="modal" data-target="#loginModal"><i class="fa fa-sign-in" aria-hidden="true"></i></button></div>
+            <button class="btn btn-light" data-toggle="modal" data-target="#loginModal"><i class="fa fa-sign-in"
+                    aria-hidden="true"></i></button>
         </div>
+    </div>
     <div class="container px-4 p-sm-0">
         <div class="row text-center my-4">
             <div class="col text-center">
@@ -39,21 +46,27 @@
         </div>
         <div class="adminRow row text-center my-4 d-none">
             <div class="col text-center">
-                <button class="btn btn-warning how" data-toggle="modal" data-target="#adminModal">Manage Squares</button>
+                <button class="btn btn-warning how" data-toggle="modal" data-target="#adminModal">Manage
+                    Squares</button>
             </div>
         </div>
         <div class="row text-center">
             <div class="col text-center">
-                <h3><a class="text-success" target="_blank" href="https://paypal.me/pools/c/8wrx0iaExF">Pay Here! - $20</a></h3>
+                <h3><a class="text-success" target="_blank" href="https://paypal.me/pools/c/8wrx0iaExF">Pay Here! -
+                        $20</a></h3>
             </div>
         </div>
         <div class="row">
             <div class="card w-100 players">
                 <h3 class="card-header">
                     Players
-                    <button class="remove d-none btn btn-danger float-right mx-2 btn-sm" role="button" data-toggle="modal" data-target="#removeModal"><i class="fa fa-minus-square" aria-hidden="true"></i></button>
-                    <button class="add d-none btn btn-success float-right mx-2 btn-sm" role="button" data-toggle="modal" data-target="#joinModal"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
-                    <button class="lock btn btn-secondary float-right mx-2 btn-sm disabled"><i class="fa fa-lock" aria-hidden="true"></i></button>
+                    <button class="remove d-none btn btn-danger float-right mx-2 btn-sm" role="button"
+                        data-toggle="modal" data-target="#removeModal"><i class="fa fa-minus-square"
+                            aria-hidden="true"></i></button>
+                    <button class="add d-none btn btn-success float-right mx-2 btn-sm" role="button" data-toggle="modal"
+                        data-target="#joinModal"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                    <button class="lock btn btn-secondary float-right mx-2 btn-sm disabled"><i class="fa fa-lock"
+                            aria-hidden="true"></i></button>
                 </h3>
                 <div class="card-body">
                     <ul></ul>
@@ -68,33 +81,53 @@
         <div class="row mt-3">
             <div class="col text-center legend">
                 <ul>
-                    <li class="mb-2 bg-tampa"><h4>Tampa Bay Buccaneers<div></div></h4></li>
-                    <li class="bg-kansas"><h4>Kansas City Chiefs<div></div></h4></li>
+                    <li class="mb-2 bg-away">
+                        <h4 id="awayHeader">
+                            <div></div>
+                        </h4>
+                    </li>
+                    <li class="bg-home">
+                        <h4 id="homeHeader">
+                            <div></div>
+                        </h4>
+                    </li>
                 </ul>
             </div>
         </div>
         <div class="row mt-4">
-            <h4 id="q1Header">First Quarter <div class="text-success"></div></h4>
+            <h4 id="q1Header">First Quarter <div class="text-success"></div>
+            </h4>
             <div class="table-responsive">
-                <table id="q1" class="positions table table-bordered table-striped"><tbody></tbody></table>
+                <table id="q1" class="positions table table-bordered table-striped">
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
         <div class="row mt-4">
-            <h4 id="q2Header">Second Quarter <div class="text-success"></div></h4>
+            <h4 id="q2Header">Second Quarter <div class="text-success"></div>
+            </h4>
             <div class="table-responsive">
-                <table id="q2" class="positions table table-bordered table-striped"><tbody></tbody></table>
+                <table id="q2" class="positions table table-bordered table-striped">
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
         <div class="row mt-4">
-            <h4 id="q3Header">Third Quarter <div class="text-success"></div></h4>
+            <h4 id="q3Header">Third Quarter <div class="text-success"></div>
+            </h4>
             <div class="table-responsive">
-                <table id="q3" class="positions table table-bordered table-striped"><tbody></tbody></table>
+                <table id="q3" class="positions table table-bordered table-striped">
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
         <div class="row mt-4">
-            <h4 id="q4Header">Fourth Quarter <div class="text-success"></div></h4>
+            <h4 id="q4Header">Fourth Quarter <div class="text-success"></div>
+            </h4>
             <div class="table-responsive">
-                <table id="q4" class="positions table table-bordered table-striped"><tbody></tbody></table>
+                <table id="q4" class="positions table table-bordered table-striped">
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -111,11 +144,13 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label class="sr-only" for="playerName">Name</label>
-                                    <input type="playerName" class="form-control form-control-sm playerName" id="playerName" placeholder="Player Name">
+                                    <input type="playerName" class="form-control form-control-sm playerName"
+                                        id="playerName" placeholder="Player Name">
                                 </div>
                             </div>
                             <div class="form-row">
-                                <button class="btn btn-success btn-sm ml-1" role="button" data-toggle="modal" data-target="#joinModal" onclick="join();return false">Join</button>
+                                <button class="btn btn-success btn-sm ml-1" role="button" data-toggle="modal"
+                                    data-target="#joinModal" onclick="join();return false">Join</button>
                             </div>
                         </form>
                     </div>
@@ -136,11 +171,13 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label class="sr-only" for="playerName">Name</label>
-                                    <input type="playerName" class="form-control form-control-sm playerName" id="playerName" placeholder="Player Name">
+                                    <input type="playerName" class="form-control form-control-sm playerName"
+                                        id="playerName" placeholder="Player Name">
                                 </div>
                             </div>
                             <div class="form-row">
-                                <button class="btn btn-danger btn-sm ml-1" role="button" data-toggle="modal" data-target="#removeModal" onclick="remove();return false">Remove</button>
+                                <button class="btn btn-danger btn-sm ml-1" role="button" data-toggle="modal"
+                                    data-target="#removeModal" onclick="remove();return false">Remove</button>
                             </div>
                         </form>
                     </div>
@@ -149,31 +186,34 @@
         </div>
     </div>
 
-    <div  id="howTo" class="modal" tabindex="-1" role="dialog">
+    <div id="howTo" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">How it works</h5>
-              <button type="button" class="close" onclick='cancelEdit()' data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <div class="row my-2">
-                    <div class="col">
-                        <button class="btn btn-sm btn-info float-right" onclick="editRules()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                        <button class="addRule btn btn-sm btn-success mx-2 float-right" onclick="addRule()"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">How it works</h5>
+                    <button type="button" class="close" onclick='cancelEdit()' data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row my-2">
+                        <div class="col">
+                            <button class="btn btn-sm btn-info float-right" onclick="editRules()"><i
+                                    class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                            <button class="addRule btn btn-sm btn-success mx-2 float-right" onclick="addRule()"><i
+                                    class="fa fa-plus-square" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ul id="howToList"></ul>
                     </div>
                 </div>
-                <div class="row">
-                    <ul id="howToList"></ul>
+                <div class="modal-footer">
+                    <button type="button" class="save btn btn-primary" onclick="saveRules()">Save changes</button>
+                    <button type="button" class="btn btn-secondary" onclick='cancelEdit()'
+                        data-dismiss="modal">Close</button>
                 </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="save btn btn-primary" onclick="saveRules()">Save changes</button>
-              <button type="button" class="btn btn-secondary" onclick='cancelEdit()' data-dismiss="modal">Close</button>
-            </div>
-          </div>
         </div>
     </div>
 
@@ -190,12 +230,15 @@
                             <div class="form-row">
                                 <div class="form-group col-12">
                                     <label class="sr-only" for="userName">User Name</label>
-                                    <input type="text" class="form-control form-control-sm" id="userName" placeholder="User Name">
+                                    <input type="text" class="form-control form-control-sm" id="userName"
+                                        placeholder="User Name">
                                 </div>
                             </div>
                             <div class="form-row">
-                                <button type="button" class="btn btn-secondary btn-sm ml-auto" data-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-primary btn-sm ml-1" onclick="login()">Sign in</button>
+                                <button type="button" class="btn btn-secondary btn-sm ml-auto"
+                                    data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary btn-sm ml-1" onclick="login()">Sign
+                                    in</button>
                             </div>
                         </form>
                     </div>
@@ -219,64 +262,88 @@
                                 <div class="col">
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                         <label id="btnLock" for="" class="btn btn-outline-danger">
-                                            <input type="radio" value=true name="squareLock" id="locked" autocomplete="off"> <i class="fa fa-lock" aria-hidden="true"></i>
+                                            <input type="radio" value=true name="squareLock" id="locked"
+                                                autocomplete="off"> <i class="fa fa-lock" aria-hidden="true"></i>
                                         </label>
                                         <label id="btnUnlock" class="btn btn-outline-success">
-                                            <input type="radio"  value=false name="squareLock" id="unlocked" autocomplete="off"> <i class="fa fa-unlock" aria-hidden="true"></i>
+                                            <input type="radio" value=false name="squareLock" id="unlocked"
+                                                autocomplete="off"> <i class="fa fa-unlock" aria-hidden="true"></i>
                                         </label>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-6 col-form-label">Scores:</label>
+                                <div class="col">
+                                    <label class="col-sm-6 col-form-label">AWAY</label>
+                                </div>
+                                <div class="col">
+                                    <label class="col-sm-6 col-form-label">HOME</label>
+                                </div>
                             </div>
                             <div id="q1" class="form-group row">
                                 <label for="siteType" class="col-sm-6 col-form-label">Q1</label>
                                 <div class="col">
-                                    <input type="number" class="d-inline form-control form-control-sm cScore" id="cScore" autocomplete="off" placeholder="TB">
+                                    <input type="number" class="d-inline form-control form-control-sm cScore"
+                                        id="cScore" autocomplete="off">
                                 </div>
                                 <div class="col">
-                                    <input type="number" class="d-inline form-control form-control-sm rScore" id="rScore" autocomplete="off" placeholder="KS">
+                                    <input type="number" class="d-inline form-control form-control-sm rScore"
+                                        id="rScore" autocomplete="off">
                                 </div>
                             </div>
                             <div id="q2" class="form-group row">
                                 <label for="siteType" class="col-sm-6 col-form-label">Q2</label>
                                 <div class="col">
-                                    <input type="number" class="d-inline form-control form-control-sm cScore" id="cScore" autocomplete="off" placeholder="TB">
+                                    <input type="number" class="d-inline form-control form-control-sm cScore"
+                                        id="cScore" autocomplete="off">
                                 </div>
                                 <div class="col">
-                                    <input type="number" class="d-inline form-control form-control-sm rScore" id="rScore" autocomplete="off" placeholder="KS">
+                                    <input type="number" class="d-inline form-control form-control-sm rScore"
+                                        id="rScore" autocomplete="off">
                                 </div>
                             </div>
                             <div id="q3" class="form-group row">
                                 <label for="siteType" class="col-sm-6 col-form-label">Q3</label>
                                 <div class="col">
-                                    <input type="number" class="d-inline form-control form-control-sm cScore" id="cScore" autocomplete="off" placeholder="TB">
+                                    <input type="number" class="d-inline form-control form-control-sm cScore"
+                                        id="cScore" autocomplete="off">
                                 </div>
                                 <div class="col">
-                                    <input type="number" class="d-inline form-control form-control-sm rScore" id="rScore" autocomplete="off" placeholder="KS">
+                                    <input type="number" class="d-inline form-control form-control-sm rScore"
+                                        id="rScore" autocomplete="off">
                                 </div>
                             </div>
                             <div id="q4" class="form-group row">
                                 <label for="siteType" class="col-sm-6 col-form-label">Q4</label>
                                 <div class="col">
-                                    <input type="number" class="d-inline form-control form-control-sm cScore" id="cScore" autocomplete="off" placeholder="TB">
+                                    <input type="number" class="d-inline form-control form-control-sm cScore"
+                                        id="cScore" autocomplete="off">
                                 </div>
                                 <div class="col">
-                                    <input type="number" class="d-inline form-control form-control-sm rScore" id="rScore" autocomplete="off" placeholder="KS">
+                                    <input type="number" class="d-inline form-control form-control-sm rScore"
+                                        id="rScore" autocomplete="off">
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-primary" onclick="saveSettings()" data-dismiss="modal">Save</button>
+                            <button type="button" class="btn btn-primary" onclick="saveSettings()"
+                                data-dismiss="modal">Save</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-      
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
     <script src="js/index.js"></script>
 </body>
+
 </html>

@@ -1,3 +1,8 @@
+:root {
+    --home: #F5C209;
+    --away: #F00203;
+}
+
 body{
     font-family: 'Bungee Inline', cursive;
    }
@@ -41,13 +46,13 @@ header{
     padding-top: 5px;
 }
 
-.bg-tampa{
-    background-color: #F00203;
+.bg-away{
+    background-color: var(--away);
     color: black;
 }
 
-.bg-kansas{
-    background-color: #F5C209;
+.bg-home{
+    background-color: var(--home);
 }
 
 .positions th, .positions td{

@@ -4,73 +4,81 @@ let q2Positons = [];
 let q3Positons = [];
 let q4Positons = [];
 let savedSettings = {};
+const away = "Tampa Bay Buccuneers"
+const home = "Kansas City Cheifs"
 
 const loading = "<div class='spinner-border text-primary' role='status'><span class='sr-only'>Loading...</span></div>";
 
-function login(){
-    let body = {uName:$("#loginModal #userName").val().toLowerCase()};
-    fetch('auth', {
-        method: "POST", 
-        headers: {
-           'Content-Type': 'application/json',
-         },
-        body: JSON.stringify(body)
-       })
-       .then(response => response.json())
-       .then(data => {
-           if(data.isAdmin)
-           {
-                $("#loginModal").modal("hide");
-                $(".adminRow").removeClass("d-none");
-           }
-           else{
-               alert("Not Admin");
-           }
-       });
+function setTeams() {
+    $("#awayHeader").html(`Away - ${away}`);
+    $("#homeHeader").html(`Home - ${home}`);
+    $(".cScore").attr("placeholder", away.split(" ")[0])
+    $(".rScore").attr("placeholder", home.split(" ")[0])
 }
 
-function checklock(){
-    if(savedSettings.isLocked === "true"){
+function login() {
+    let body = { uName: $("#loginModal #userName").val().toLowerCase() };
+    fetch('auth', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body)
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.isAdmin) {
+                $("#loginModal").modal("hide");
+                $(".adminRow").removeClass("d-none");
+            }
+            else {
+                alert("Not Admin");
+            }
+        });
+}
+
+function checklock() {
+    if (savedSettings.isLocked === "true") {
         $("#btnLock").addClass("active");
         $("#btnUnlock").removeClass("active");
 
         $(".btn.remove, .btn.add").addClass("d-none");
         $(".btn.lock").removeClass("d-none");
     }
-    else{
+    else {
         $("#btnLock").removeClass("active");
         $("#btnUnlock").addClass("active");
 
         $(".btn.remove, .btn.add").removeClass("d-none");
         $(".btn.lock").addClass("d-none");
-    } 
+    }
 }
 
-function drawTable(id){
+function drawTable(id) {
     let table = $(`#${id} tbody`);
     drawHeader(table);
     drawBody(table);
 }
 
-function drawHeader(table){
+function drawHeader(table) {
     let headerRow = $(`<tr><th>${"&nbsp;".repeat(10)}</th></tr>`);
-    for(let i = 0; i < 10; i++){
-        headerRow.append(`<th class="bg-tampa">${i}</th>`);
+    for (let i = 0; i < 10; i++) {
+        headerRow.append(`<th class="bg-away">${i}</th>`);
     }
     table.append(headerRow);
 }
 
-function drawBody(table){
-    for(let r = 0; r < 10; r++){
-        let row = $(`<tr><th class='stick bg-kansas'>${r}</th></tr>`);
-        for(let c = 0; c < 10; c++){
+function drawBody(table) {
+    for (let r = 0; r < 10; r++) {
+        let row = $(`<tr><th class='stick bg-home'>${r}</th></tr>`);
+        for (let c = 0; c < 10; c++) {
             row.append(`<td class="position r${r}c${c} bg-dark"></td>`);
         }
         table.append(row);
     }
 }
 
-function play(){
+function play() {
     $(".position").addClass("bg-dark").text("");
     $(".play.btn").addClass("disabled");
 
@@ -79,51 +87,49 @@ function play(){
     q3Positons = generatePositions();
     q4Positons = generatePositions();
     fetch('positions', {
-        method: "Post", 
+        method: "Post",
         headers: {
-           'Content-Type': 'application/json',
-         },
-        body: JSON.stringify([{name:"q1",positions:q1Positons},{name:"q2",positions:q2Positons},{name:"q3",positions:q3Positons},{name:"q4",positions:q4Positons}])
-       })
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify([{ name: "q1", positions: q1Positons }, { name: "q2", positions: q2Positons }, { name: "q3", positions: q3Positons }, { name: "q4", positions: q4Positons }])
+    })
         .then(response => {
             populateTables()
             $(".play.btn").removeClass("disabled");
         });
 }
 
-function populateTables(){
+function populateTables() {
     fetch('positions')
         .then(response => response.json())
         .then(data => {
-            if(data.length)
-            {
+            if (data.length) {
                 q1Positons = data.filter(q => q.name === "q1")[0].positions;
                 q2Positons = data.filter(q => q.name === "q2")[0].positions;
                 q3Positons = data.filter(q => q.name === "q3")[0].positions;
                 q4Positons = data.filter(q => q.name === "q4")[0].positions;
 
-                populateTable("q1" , q1Positons);
-                populateTable("q2" , q2Positons);
-                populateTable("q3" , q3Positons);
-                populateTable("q4" , q4Positons);
+                populateTable("q1", q1Positons);
+                populateTable("q2", q2Positons);
+                populateTable("q3", q3Positons);
+                populateTable("q4", q4Positons);
                 getSettings();
             }
-            
+
         });
 }
 
-function generatePositions(){
+function generatePositions() {
     const allowedPositions = Math.floor(100 / players.length);
     let result = {};
-    for (let idx in players){
+    for (let idx in players) {
         let playerPositions = 0;
-        while(playerPositions < allowedPositions)
-        {
+        while (playerPositions < allowedPositions) {
             let r = Math.floor(Math.random() * 10);
             let c = Math.floor(Math.random() * 10);
             let randomP = `r${r}c${c}`;
 
-            if(!Object.keys(result).includes(randomP)){
+            if (!Object.keys(result).includes(randomP)) {
                 result[randomP] = players[idx].name;
                 playerPositions++;
             }
@@ -132,72 +138,71 @@ function generatePositions(){
     return result;
 }
 
-function populateTable(id, positions){
-    for(let key in positions)
-    {
+function populateTable(id, positions) {
+    for (let key in positions) {
         let cell = $(`#${id} .${key}`);
         cell.text(positions[key]);
         cell.removeClass("bg-dark");
     }
 }
 
-function DrawTables(){
+function DrawTables() {
     drawTable("q1");
     drawTable("q2");
     drawTable("q3");
     drawTable("q4");
 }
 
-function populatePlayers(shuffleBoard){
+function populatePlayers(shuffleBoard) {
     let playersCard = $(".players .card-body");
     playersCard.html(loading);
     fetch('players')
         .then(response => response.json())
         .then(data => {
             players = data;
-            if(shuffleBoard){ play(); }
+            if (shuffleBoard) { play(); }
             let list = $("<ul></ul>");
             players.forEach(player => {
                 list.append(`<li>${player.name}</li>`);
                 playersCard.html(list);
             });
-            const payout =  players.length * 20;
-            playersCard.append(`<div class='text-center'>Current Quarterly Payout = <span= class="text-success">$${ payout / 4 }</span></div>`);
-            playersCard.append(`<div class='text-center'>Current Total Pot = <span= class="text-success">$${ payout }</span></div>`);
+            const payout = players.length * 20;
+            playersCard.append(`<div class='text-center'>Current Quarterly Payout = <span= class="text-success">$${payout / 4}</span></div>`);
+            playersCard.append(`<div class='text-center'>Current Total Pot = <span= class="text-success">$${payout}</span></div>`);
         });
 }
 
-function join(){
+function join() {
     let name = $("#joinModal #playerName").val().toLowerCase();
     fetch('players', {
-         method: "PUT", 
-         headers: {
+        method: "PUT",
+        headers: {
             'Content-Type': 'text/plain',
-          },
-         body: name 
-        })
+        },
+        body: name
+    })
         .then(response => {
             $(".playerName").val('');
             populatePlayers(true);
         });
 }
 
-function remove(){
+function remove() {
     let name = $("#removeModal #playerName").val().toLowerCase();
     fetch('players', {
-         method: "DELETE", 
-         headers: {
+        method: "DELETE",
+        headers: {
             'Content-Type': 'text/plain',
-          },
-         body: name 
-        })
+        },
+        body: name
+    })
         .then(response => {
             $(".playerName").val('');
             populatePlayers(true);
         });
 }
 
-function populateRules(){
+function populateRules() {
     let list = $("#howToList");
     list.html(loading);
     $(".btn.how").addClass("disabled");
@@ -214,52 +219,51 @@ function populateRules(){
         });
 }
 
-function editRules(){
-    $("#howTo").addClass("edit"); 
+function editRules() {
+    $("#howTo").addClass("edit");
 }
 
-function cancelEdit(){
-    $("#howTo").removeClass("edit"); 
+function cancelEdit() {
+    $("#howTo").removeClass("edit");
 }
 
-function addRule(){
+function addRule() {
     $("#howToList").append("<li class='my-2'><input type='text' value='' /></li>")
 }
 
-function saveRules(){
+function saveRules() {
     let list = $("#howToList");
     let newRules = [];
-    list.find("input").each(function() {
+    list.find("input").each(function () {
         let rule = $(this).val();
-        if(rule)
-        {
+        if (rule) {
             newRules.push(rule);
         }
     });
     list.html(loading);
     fetch('rules', {
-        method: "PUT", 
+        method: "PUT",
         headers: {
-           'Content-Type': 'application/json',
-         },
+            'Content-Type': 'application/json',
+        },
         body: JSON.stringify([newRules])
-       })
+    })
         .then(response => {
             populateRules();
         });
 }
 
-function getSettings(){
+function getSettings() {
     fetch('settings')
-       .then(response => response.json())
-       .then(resp => {
-           savedSettings = resp;
-           checklock();
-           manageScores();
-       });
+        .then(response => response.json())
+        .then(resp => {
+            savedSettings = resp;
+            checklock();
+            manageScores();
+        });
 }
 
-function saveSettings(){
+function saveSettings() {
     let settings = {
         isLocked: $("[name='squareLock']:checked").val(),
         q1: `${$("#q1 .rScore").val()}:${$("#q1 .cScore").val()}`,
@@ -268,53 +272,50 @@ function saveSettings(){
         q4: `${$("#q4 .rScore").val()}:${$("#q4 .cScore").val()}`,
     };
     fetch('settings', {
-        method: "POST", 
+        method: "POST",
         headers: {
-           'Content-Type': 'application/json',
-         },
+            'Content-Type': 'application/json',
+        },
         body: JSON.stringify(settings)
-       })
+    })
         .then(response => {
             getSettings();
         });
 }
 
-function manageScores(){
+function manageScores() {
     $("h4 div").html("");
     let q1Scores = savedSettings.q1.split(":");
     let q2Scores = savedSettings.q2.split(":");
     let q3Scores = savedSettings.q3.split(":");
     let q4Scores = savedSettings.q4.split(":");
-    if(q1Scores[0] && q1Scores[1])
-    {
+    if (q1Scores[0] && q1Scores[1]) {
         const position = `r${q1Scores[0] % 10}c${q1Scores[1] % 10}`;
         const winner = $("#q1 ." + position).text();
-        $("#q1 ." + position).css({background:"#28a745"});
-        $("#q1Header div").html(`Tampa ${q1Scores[1]} / Kasans ${q1Scores[0]} = Winner ${winner}`);
+        $("#q1 ." + position).css({ background: "#28a745" });
+        $("#q1Header div").html(`${away.split(" ")[0]} ${q1Scores[1]} / ${home.split(" ")[0]} ${q1Scores[0]} = Winner ${winner}`);
     }
-    if(q2Scores[0] && q2Scores[1])
-    {
+    if (q2Scores[0] && q2Scores[1]) {
         const position = `r${q2Scores[0] % 10}c${q2Scores[1] % 10}`;
         const winner = $("#q2 ." + position).text();
-        $("#q2 ." + position).css({background:"#28a745"});
-        $("#q2Header div").html(`Tampa ${q2Scores[1]} / Kasans ${q2Scores[0]} = Winner ${winner}`);
+        $("#q2 ." + position).css({ background: "#28a745" });
+        $("#q2Header div").html(`${away.split(" ")[0]} ${q2Scores[1]} / ${home.split(" ")[0]} ${q2Scores[0]} = Winner ${winner}`);
     }
-    if(q3Scores[0] && q3Scores[1])
-    {
+    if (q3Scores[0] && q3Scores[1]) {
         const position = `r${q3Scores[0] % 10}c${q3Scores[1] % 10}`;
         const winner = $("#q3 ." + position).text();
-        $("#q3 ." + position).css({background:"#28a745"});
-        $("#q3Header div").html(`Tampa ${q3Scores[1]} / Kasans ${q3Scores[0]} = Winner ${winner}`);
+        $("#q3 ." + position).css({ background: "#28a745" });
+        $("#q3Header div").html(`${away.split(" ")[0]} ${q3Scores[1]} / ${home.split(" ")[0]} ${q3Scores[0]} = Winner ${winner}`);
     }
-    if(q4Scores[0] && q4Scores[1])
-    {
+    if (q4Scores[0] && q4Scores[1]) {
         const position = `r${q4Scores[0] % 10}c${q4Scores[1] % 10}`;
         const winner = $("#q4 ." + position).text();
-        $("#q4 ." + position).css({background:"#28a745"});
-        $("#q4Header div").html(`Tampa ${q4Scores[1]} / Kasans ${q4Scores[0]} = Winner ${winner}`);
+        $("#q4 ." + position).css({ background: "#28a745" });
+        $("#q4Header div").html(`${away.split(" ")[0]} ${q4Scores[1]} / ${home.split(" ")[0]} ${q4Scores[0]} = Winner ${winner}`);
     }
 }
 
+setTeams();
 DrawTables();
 populatePlayers();
 populateTables()

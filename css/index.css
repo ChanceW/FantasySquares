@@ -70,3 +70,7 @@ header{
 #howTo.edit li span{
     display: none;
 }
+
+.winnerCell{
+    background: #28a745
+}

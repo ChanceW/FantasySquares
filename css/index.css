@@ -1,7 +1,4 @@
-:root {
-    --home: #F5C209;
-    --away: #F00203;
-}
+
 
 body{
     font-family: 'Bungee Inline', cursive;
@@ -55,6 +52,14 @@ header{
     background-color: var(--home);
 }
 
+.fore-away{
+    color: var(--away);
+}
+
+.fore-home{
+    color: var(--home);
+}
+
 .positions th, .positions td{
     text-align: center;
 }
@@ -73,4 +78,8 @@ header{
 
 .winnerCell{
     background: #28a745
+}
+
+.colorpick-eyedropper-input-trigger{
+    display: none;
 }

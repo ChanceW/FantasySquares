@@ -4,16 +4,20 @@ let q2Positons = [];
 let q3Positons = [];
 let q4Positons = [];
 let savedSettings = {};
-const awayTeam = "Tampa Bay Buccuneers"
-const homeTeam = "Kansas City Cheifs"
 
 const loading = "<div class='spinner-border text-primary' role='status'><span class='sr-only'>Loading...</span></div>";
 
 function setTeams() {
-    $("#awayHeader").html(`Away - ${awayTeam}`);
-    $("#homeHeader").html(`Home - ${homeTeam}`);
-    $(".cScore").attr("placeholder", awayTeam.split(" ")[0])
-    $(".rScore").attr("placeholder", homeTeam.split(" ")[0])
+    $("#awayHeader").html(`Away - ${savedSettings.awayTeam}`);
+    $("#homeHeader").html(`Home - ${savedSettings.homeTeam}`);
+    $("#awayTeam").val(savedSettings.awayTeam);
+    $("#homeTeam").val(savedSettings.homeTeam);
+    $("#awayColor").val(savedSettings.awayColor);
+    $("#homeColor").val(savedSettings.homeColor);
+    document.documentElement.style.setProperty("--away", savedSettings.awayColor)
+    document.documentElement.style.setProperty("--home", savedSettings.homeColor)
+    $(".cScore").attr("placeholder", savedSettings.awayTeam.split(" ")[0])
+    $(".rScore").attr("placeholder", savedSettings.homeTeam.split(" ")[0])
 }
 
 function login() {
@@ -268,6 +272,10 @@ function setSettings() {
 
 function saveSettings() {
     let settings = {
+        awayTeam: $("#awayTeam").val(),
+        homeTeam: $("#homeTeam").val(),
+        awayColor: $("#awayColor").val(),
+        homeColor: $("#homeColor").val(),
         isLocked: $("[name='squareLock']:checked").val(),
         q1: `${$("#q1 .rScore").val()}:${$("#q1 .cScore").val()}`,
         q2: `${$("#q2 .rScore").val()}:${$("#q2 .cScore").val()}`,
@@ -307,7 +315,7 @@ function manageScores() {
         $(`#${quarter} .winnerCell`).removeClass("winnerCell");
 
         $(`#${quarter} .${position}`).addClass("winnerCell"); //Winner Block
-        $(`#${quarter}Header div`).html(`${awayTeam.split(" ")[0]} ${awayScore} / ${homeTeam.split(" ")[0]} ${homeScore} = Winner ${winner}`);//Quarter header
+        $(`#${quarter}Header div`).html(`${saveSettings.awayTeam.split(" ")[0]} ${awayScore} / ${savedSettings.homeTeam.split(" ")[0]} ${homeScore} = Winner ${winner}`);//Quarter header
         $(`#${quarter} .rScore`).val(homeScore);//Settings Box Home Score
         $(`#${quarter} .cScore`).val(awayScore);//Settings Box Away Score
     }

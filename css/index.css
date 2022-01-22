@@ -45,11 +45,12 @@ header{
 
 .bg-away{
     background-color: var(--away);
-    color: black;
+    color: var(--away2);
 }
 
 .bg-home{
     background-color: var(--home);
+    color: var(--home2);
 }
 
 .fore-away{
@@ -82,4 +83,8 @@ header{
 
 .colorpick-eyedropper-input-trigger{
     display: none;
+}
+
+#adminModal .modal-content{
+    width: 125%;
 }

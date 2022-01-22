@@ -8,16 +8,29 @@ let savedSettings = {};
 const loading = "<div class='spinner-border text-primary' role='status'><span class='sr-only'>Loading...</span></div>";
 
 function setTeams() {
+    $("#payMessage").attr('href', savedSettings.payLink);
+    $("#payMessage").text(`Pay Here! - $${savedSettings.buyIn}`);
+    $("#payLink").val(savedSettings.payLink);
+    const payout = players.length * Number(savedSettings.buyIn);
+    $("#qPay").text(`$${payout / 4}`);
+    $("#tPay").text(`$${payout}`);
+
+
     $("#awayHeader").html(`Away - ${savedSettings.awayTeam}`);
     $("#homeHeader").html(`Home - ${savedSettings.homeTeam}`);
     $("#awayTeam").val(savedSettings.awayTeam);
     $("#homeTeam").val(savedSettings.homeTeam);
+
     $("#awayColor").val(savedSettings.awayColor);
     $("#homeColor").val(savedSettings.homeColor);
+    $("#awayColor2").val(savedSettings.awayColor2);
+    $("#homeColor2").val(savedSettings.homeColor2);
     document.documentElement.style.setProperty("--away", savedSettings.awayColor)
     document.documentElement.style.setProperty("--home", savedSettings.homeColor)
-    $(".cScore").attr("placeholder", savedSettings.awayTeam.split(" ")[0])
-    $(".rScore").attr("placeholder", savedSettings.homeTeam.split(" ")[0])
+    document.documentElement.style.setProperty("--away2", savedSettings.awayColor2)
+    document.documentElement.style.setProperty("--home2", savedSettings.homeColor2)
+    $(".cScore").attr("placeholder", savedSettings.awayTeam.split(" ")[savedSettings.awayTeam.split(" ").length - 1])
+    $(".rScore").attr("placeholder", savedSettings.homeTeam.split(" ")[savedSettings.homeTeam.split(" ").length - 1])
 }
 
 function login() {
@@ -168,9 +181,8 @@ function populatePlayers(shuffleBoard) {
                 list.append(`<li>${player.name}</li>`);
                 playersCard.html(list);
             });
-            const payout = players.length * 20;
-            playersCard.append(`<div class='text-center'>Current Quarterly Payout = <span= class="text-success">$${payout / 4}</span></div>`);
-            playersCard.append(`<div class='text-center'>Current Total Pot = <span= class="text-success">$${payout}</span></div>`);
+            playersCard.append(`<div class='text-center'>Current Quarterly Payout = <span id="qPay" class="text-success"></span></div>`);
+            playersCard.append(`<div class='text-center'>Current Total Pot = <span id="tPay" class="text-success"></span></div>`);
         });
 }
 
@@ -272,10 +284,14 @@ function setSettings() {
 
 function saveSettings() {
     let settings = {
+        payLink: $("#payLink").val(),
+        buyIn: $("#buyIn").val(),
         awayTeam: $("#awayTeam").val(),
         homeTeam: $("#homeTeam").val(),
         awayColor: $("#awayColor").val(),
         homeColor: $("#homeColor").val(),
+        awayColor2: $("#awayColor2").val(),
+        homeColor2: $("#homeColor2").val(),
         isLocked: $("[name='squareLock']:checked").val(),
         q1: `${$("#q1 .rScore").val()}:${$("#q1 .cScore").val()}`,
         q2: `${$("#q2 .rScore").val()}:${$("#q2 .cScore").val()}`,
@@ -296,6 +312,7 @@ function saveSettings() {
 
 function manageScores() {
     $("h4 div").html("");
+    $(`.winnerCell`).removeClass("winnerCell");
     let q1Scores = savedSettings.q1.split(":");
     let q2Scores = savedSettings.q2.split(":");
     let q3Scores = savedSettings.q3.split(":");
@@ -312,7 +329,6 @@ function manageScores() {
         const quarter = `q${Number(idx) + 1}`;
         const position = `r${homeScore % 10}c${awayScore % 10}`;
         const winner = $(`#${quarter} .${position}`).text();
-        $(`#${quarter} .winnerCell`).removeClass("winnerCell");
 
         $(`#${quarter} .${position}`).addClass("winnerCell"); //Winner Block
         $(`#${quarter}Header div`).html(`${savedSettings.awayTeam.split(" ")[0]} ${awayScore} / ${savedSettings.homeTeam.split(" ")[0]} ${homeScore} = Winner ${winner}`);//Quarter header

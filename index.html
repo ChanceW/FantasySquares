@@ -52,8 +52,7 @@
         </div>
         <div class="row text-center">
             <div class="col text-center">
-                <h3><a class="text-success" target="_blank" href="https://paypal.me/pools/c/8wrx0iaExF">Pay Here! -
-                        $20</a></h3>
+                <h3><a class="text-success" id="payMessage" target="_blank" href="#">Pay Here!</a></h3>
             </div>
         </div>
         <div class="row">
@@ -258,21 +257,39 @@
                     <div class="container-fluid">
                         <form>
                             <div class="form-group row">
+                                <label for="siteType" class="col-sm-3 col-form-label">PayPal Link</label>
+                                <div class="col-sm">
+                                    <input id="payLink" type="text" class="d-inline form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="siteType" class="col-sm-10 col-form-label">Buy In</label>
+                                <div class="col-sm">
+                                    <input id="buyIn" type="number" class="d-inline form-control form-control-sm">
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="siteType" class="col-sm-2 col-form-label">Away</label>
-                                <div class="col-sm-8">
+                                <div class="col-sm-7">
                                     <input id="awayTeam" type="text" class="d-inline form-control form-control-sm">
                                 </div>
                                 <div class="col">
                                     <input id="awayColor" type="color" class="d-inline form-control form-control-sm">
                                 </div>
+                                <div class="col">
+                                    <input id="awayColor2" type="color" class="d-inline form-control form-control-sm">
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label for="siteType" class="col-sm-2 col-form-label">Home</label>
-                                <div class="col-sm-8">
+                                <div class="col-sm-7">
                                     <input id="homeTeam" type="text" class="d-inline form-control form-control-sm">
                                 </div>
                                 <div class="col">
                                     <input id="homeColor" type="color" class="d-inline form-control form-control-sm">
+                                </div>
+                                <div class="col">
+                                    <input id="homeColor2" type="color" class="d-inline form-control form-control-sm">
                                 </div>
                             </div>
                             <div class="form-group row">

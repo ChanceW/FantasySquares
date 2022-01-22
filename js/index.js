@@ -315,14 +315,14 @@ function manageScores() {
         $(`#${quarter} .winnerCell`).removeClass("winnerCell");
 
         $(`#${quarter} .${position}`).addClass("winnerCell"); //Winner Block
-        $(`#${quarter}Header div`).html(`${saveSettings.awayTeam.split(" ")[0]} ${awayScore} / ${savedSettings.homeTeam.split(" ")[0]} ${homeScore} = Winner ${winner}`);//Quarter header
+        $(`#${quarter}Header div`).html(`${savedSettings.awayTeam.split(" ")[0]} ${awayScore} / ${savedSettings.homeTeam.split(" ")[0]} ${homeScore} = Winner ${winner}`);//Quarter header
         $(`#${quarter} .rScore`).val(homeScore);//Settings Box Home Score
         $(`#${quarter} .cScore`).val(awayScore);//Settings Box Away Score
     }
 }
 
 DrawTables();
-getSettings();
 populatePlayers();
 populateTables()
 populateRules();
+getSettings();

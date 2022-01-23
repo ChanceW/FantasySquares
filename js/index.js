@@ -4,33 +4,42 @@ let q2Positons = [];
 let q3Positons = [];
 let q4Positons = [];
 let savedSettings = {};
+const nflTeams = {
+    "sf4": { name: "San Francisco 49ers", color1: "#af1e2c", color2: "#ffffff" },
+    "gbp": { name: "Green bay packers", color1: "#213d30", color2: "#ffb50e" },
+    "tbb": { name: "Tampa Bay Buccaneers", color1: "#CE0A0A", color2: "#ffffff" },
+    "lar": { name: "Los Angeles Rams", color1: "#1F368B", color2: "#E8C82E" },
+    "cnb": { name: "Cincinnati Bengals", color1: "#F34D13", color2: "#000000" },
+    "kcc": { name: "Kansas City Chiefs", color1: "#FCCE0D", color2: "#DC1735" },
+    "bfb": { name: "Buffalo Bills", color1: "#194787", color2: "#BF2026" }
+};
 
 const loading = "<div class='spinner-border text-primary' role='status'><span class='sr-only'>Loading...</span></div>";
 
+function populatePlayersNflTeams() {
+    for (var team in nflTeams) {
+        $(".teamPicker").append(`<option value=${team}>${nflTeams[team].name}</option>`);
+    }
+}
+
 function setTeams() {
-    $("#payMessage").attr('href', savedSettings.payLink);
-    $("#payMessage").text(`Pay Here! - $${savedSettings.buyIn}`);
-    $("#payLink").val(savedSettings.payLink);
-    const payout = players.length * Number(savedSettings.buyIn);
-    $("#qPay").text(`$${payout / 4}`);
-    $("#tPay").text(`$${payout}`);
+    setColors();
 
+    const awayTeam = nflTeams[savedSettings.awayTeam];
+    const homeTeam = nflTeams[savedSettings.homeTeam];
+    $("#awayHeader").html(`Away - ${awayTeam.name}`);
+    $("#homeHeader").html(`Home - ${homeTeam.name}`);
+    $(".cScore").attr("placeholder", awayTeam.name.split(" ")[awayTeam.name.split(" ").length - 1])
+    $(".rScore").attr("placeholder", homeTeam.name.split(" ")[homeTeam.name.split(" ").length - 1])
+}
 
-    $("#awayHeader").html(`Away - ${savedSettings.awayTeam}`);
-    $("#homeHeader").html(`Home - ${savedSettings.homeTeam}`);
-    $("#awayTeam").val(savedSettings.awayTeam);
-    $("#homeTeam").val(savedSettings.homeTeam);
-
-    $("#awayColor").val(savedSettings.awayColor);
-    $("#homeColor").val(savedSettings.homeColor);
-    $("#awayColor2").val(savedSettings.awayColor2);
-    $("#homeColor2").val(savedSettings.homeColor2);
-    document.documentElement.style.setProperty("--away", savedSettings.awayColor)
-    document.documentElement.style.setProperty("--home", savedSettings.homeColor)
-    document.documentElement.style.setProperty("--away2", savedSettings.awayColor2)
-    document.documentElement.style.setProperty("--home2", savedSettings.homeColor2)
-    $(".cScore").attr("placeholder", savedSettings.awayTeam.split(" ")[savedSettings.awayTeam.split(" ").length - 1])
-    $(".rScore").attr("placeholder", savedSettings.homeTeam.split(" ")[savedSettings.homeTeam.split(" ").length - 1])
+function setColors() {
+    const awayTeam = nflTeams[savedSettings.awayTeam];
+    const homeTeam = nflTeams[savedSettings.homeTeam];
+    document.documentElement.style.setProperty("--away", awayTeam.color1)
+    document.documentElement.style.setProperty("--home", homeTeam.color1)
+    document.documentElement.style.setProperty("--away2", awayTeam.color2)
+    document.documentElement.style.setProperty("--home2", homeTeam.color2)
 }
 
 function login() {
@@ -178,7 +187,7 @@ function populatePlayers(shuffleBoard) {
             if (shuffleBoard) { play(); }
             let list = $("<ul></ul>");
             players.forEach(player => {
-                list.append(`<li>${player.name}</li>`);
+                list.append(`<li>${player.name.replace(" ", "-")}</li>`);
                 playersCard.html(list);
             });
             playersCard.append(`<div class='text-center'>Current Quarterly Payout = <span id="qPay" class="text-success"></span></div>`);
@@ -277,6 +286,13 @@ function getSettings() {
 }
 
 function setSettings() {
+    $("#payMessage").attr('href', savedSettings.payLink);
+    $("#payMessage").text(`Pay Here! - $${savedSettings.buyIn}`);
+    $("#payLink").val(savedSettings.payLink);
+    $("#buyIn").val(savedSettings.buyIn);
+    const payout = players.length * Number(savedSettings.buyIn);
+    $("#qPay").text(`$${payout / 4}`);
+    $("#tPay").text(`$${payout}`);
     setTeams();
     checklock();
     manageScores();
@@ -288,10 +304,6 @@ function saveSettings() {
         buyIn: $("#buyIn").val(),
         awayTeam: $("#awayTeam").val(),
         homeTeam: $("#homeTeam").val(),
-        awayColor: $("#awayColor").val(),
-        homeColor: $("#homeColor").val(),
-        awayColor2: $("#awayColor2").val(),
-        homeColor2: $("#homeColor2").val(),
         isLocked: $("[name='squareLock']:checked").val(),
         q1: `${$("#q1 .rScore").val()}:${$("#q1 .cScore").val()}`,
         q2: `${$("#q2 .rScore").val()}:${$("#q2 .cScore").val()}`,
@@ -320,8 +332,8 @@ function manageScores() {
     const allQuarters = [q1Scores, q2Scores, q3Scores, q4Scores]
 
     for (const idx in allQuarters) {
-        const awayScore = allQuarters[idx][0];
-        const homeScore = allQuarters[idx][1];
+        const awayScore = allQuarters[idx][1];
+        const homeScore = allQuarters[idx][0];
         if (!awayScore && !homeScore) {
             continue;
         }
@@ -337,6 +349,7 @@ function manageScores() {
     }
 }
 
+populatePlayersNflTeams();
 DrawTables();
 populatePlayers();
 populateTables()

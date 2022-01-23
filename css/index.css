@@ -85,6 +85,6 @@ header{
     display: none;
 }
 
-#adminModal .modal-content{
-    width: 125%;
+.teamPicker{
+    padding: 0;
 }

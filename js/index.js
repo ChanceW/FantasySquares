@@ -7,11 +7,15 @@ let savedSettings = {};
 const nflTeams = {
     "sf4": { name: "San Francisco 49ers", color1: "#af1e2c", color2: "#ffffff" },
     "gbp": { name: "Green bay packers", color1: "#213d30", color2: "#ffb50e" },
-    "tbb": { name: "Tampa Bay Buccaneers", color1: "#CE0A0A", color2: "#ffffff" },
+    "tbb": { name: "Tampa Bay Buccaneers", color1: "#CE0A0A", color2: "#3b303c" },
     "lar": { name: "Los Angeles Rams", color1: "#1F368B", color2: "#E8C82E" },
     "cnb": { name: "Cincinnati Bengals", color1: "#F34D13", color2: "#000000" },
     "kcc": { name: "Kansas City Chiefs", color1: "#FCCE0D", color2: "#DC1735" },
-    "bfb": { name: "Buffalo Bills", color1: "#194787", color2: "#BF2026" }
+    "bfb": { name: "Buffalo Bills", color1: "#194787", color2: "#BF2026" },
+    "lvr": { name: "Las Vegas Raiders", color1: "#010101", color2: "#9BA5A8" },
+    "pde": { name: "Philadelphia Eagles", color1: "#004C54", color2: "#ffffff" },
+    "tnt": { name: "Tennessee Titans", color1: "#498DD4", color2: "#C00C2E" },
+    "btr": { name: "Baltimore Ravens", color1: "#23166F", color2: "#99780C" },
 };
 
 const loading = "<div class='spinner-border text-primary' role='status'><span class='sr-only'>Loading...</span></div>";
@@ -23,19 +27,18 @@ function populatePlayersNflTeams() {
 }
 
 function setTeams() {
-    setColors();
-
     const awayTeam = nflTeams[savedSettings.awayTeam];
     const homeTeam = nflTeams[savedSettings.homeTeam];
+    setColors(awayTeam, homeTeam);
+    $("#awayTeam").val(savedSettings.awayTeam);
+    $("#homeTeam").val(savedSettings.homeTeam);
     $("#awayHeader").html(`Away - ${awayTeam.name}`);
     $("#homeHeader").html(`Home - ${homeTeam.name}`);
     $(".cScore").attr("placeholder", awayTeam.name.split(" ")[awayTeam.name.split(" ").length - 1])
     $(".rScore").attr("placeholder", homeTeam.name.split(" ")[homeTeam.name.split(" ").length - 1])
 }
 
-function setColors() {
-    const awayTeam = nflTeams[savedSettings.awayTeam];
-    const homeTeam = nflTeams[savedSettings.homeTeam];
+function setColors(awayTeam, homeTeam) {
     document.documentElement.style.setProperty("--away", awayTeam.color1)
     document.documentElement.style.setProperty("--home", homeTeam.color1)
     document.documentElement.style.setProperty("--away2", awayTeam.color2)

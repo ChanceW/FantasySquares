@@ -1,4 +1,4 @@
-const url = "mongodb+srv://myMongoAdmin:CBWvii08!@cluster0.fvgkv.mongodb.net/Squares?retryWrites=true&w=majority";
+const url = "mongodb+srv://myMongoAdmin:CBWvii08!@cluster0.fvgkv.mongodb.net/Squares-dev?retryWrites=true&w=majority";
 const MongoClient = require('mongodb').MongoClient;
 const dbName = 'Squares';
 const controller = require("./controllers");

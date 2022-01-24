@@ -5,6 +5,7 @@ let q3Positons = [];
 let q4Positons = [];
 let savedSettings = {};
 const nflTeams = {
+    "": { name: "Pick a Team", color1: "#ffffff", color2: "#000000" },
     "sf4": { name: "San Francisco 49ers", color1: "#af1e2c", color2: "#ffffff" },
     "gbp": { name: "Green bay packers", color1: "#213d30", color2: "#ffb50e" },
     "tbb": { name: "Tampa Bay Buccaneers", color1: "#CE0A0A", color2: "#3b303c" },
@@ -189,10 +190,13 @@ function populatePlayers(shuffleBoard) {
             players = data;
             if (shuffleBoard) { play(); }
             let list = $("<ul></ul>");
+            if (players.length < 1) {
+                list.append(`<li>No players have joined</li>`);
+            }
             players.forEach(player => {
                 list.append(`<li>${player.name.replace(" ", "-")}</li>`);
-                playersCard.html(list);
             });
+            playersCard.html(list);
             playersCard.append(`<div class='text-center'>Current Quarterly Payout = <span id="qPay" class="text-success"></span></div>`);
             playersCard.append(`<div class='text-center'>Current Total Pot = <span id="tPay" class="text-success"></span></div>`);
         });
@@ -213,8 +217,8 @@ function join() {
         });
 }
 
-function remove() {
-    let name = $("#removeModal #playerName").val().toLowerCase();
+function remove(reset) {
+    let name = reset ? "reset" : $("#removeModal #playerName").val().toLowerCase();
     fetch('players', {
         method: "DELETE",
         headers: {
@@ -224,6 +228,9 @@ function remove() {
     })
         .then(response => {
             $(".playerName").val('');
+            if (reset) {
+                saveSettings(reset);
+            }
             populatePlayers(true);
         });
 }
@@ -301,7 +308,7 @@ function setSettings() {
     manageScores();
 }
 
-function saveSettings() {
+function saveSettings(reset) {
     let settings = {
         payLink: $("#payLink").val(),
         buyIn: $("#buyIn").val(),
@@ -318,7 +325,7 @@ function saveSettings() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(settings)
+        body: JSON.stringify(reset ? defaultSettings : settings)
     })
         .then(response => {
             getSettings();
@@ -326,6 +333,10 @@ function saveSettings() {
 }
 
 function manageScores() {
+    const awayTeam = nflTeams[savedSettings.awayTeam];
+    const homeTeam = nflTeams[savedSettings.homeTeam];
+    const awayShortName = awayTeam.name.split(" ")[awayTeam.name.split(" ").length - 1];
+    const homeShortName = homeTeam.name.split(" ")[homeTeam.name.split(" ").length - 1];
     $("h4 div").html("");
     $(`.winnerCell`).removeClass("winnerCell");
     let q1Scores = savedSettings.q1.split(":");
@@ -346,7 +357,7 @@ function manageScores() {
         const winner = $(`#${quarter} .${position}`).text();
 
         $(`#${quarter} .${position}`).addClass("winnerCell"); //Winner Block
-        $(`#${quarter}Header div`).html(`${savedSettings.awayTeam.split(" ")[0]} ${awayScore} / ${savedSettings.homeTeam.split(" ")[0]} ${homeScore} = Winner ${winner}`);//Quarter header
+        $(`#${quarter}Header div`).html(`${awayShortName} ${awayScore} / ${homeShortName} ${homeScore} = Winner ${winner}`);//Quarter header
         $(`#${quarter} .rScore`).val(homeScore);//Settings Box Home Score
         $(`#${quarter} .cScore`).val(awayScore);//Settings Box Away Score
     }
@@ -358,3 +369,15 @@ populatePlayers();
 populateTables()
 populateRules();
 getSettings();
+
+const defaultSettings = {
+    payLink: $("#payLink").val(),
+    buyIn: 20,
+    awayTeam: "",
+    homeTeam: "",
+    isLocked: false,
+    q1: ':',
+    q2: ':',
+    q3: ':',
+    q4: ':',
+};

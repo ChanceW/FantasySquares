@@ -50,6 +50,16 @@ const players = (req, res) => {
                     const db = client.db(dbName);
                     const collection = db.collection('Players');
                     console.log("Entering: " + name);
+                    if (name == "reset") {
+                        collection.deleteMany({}, function (err, result) {
+                            html = JSON.stringify(result);
+                            client.close();
+                            res.writeHead(200);
+                            res.write(html);
+                            res.end();
+                        });
+                    }
+
                     collection.deleteOne({ "name": name }, function (err, result) {
                         html = JSON.stringify(result);
                         client.close();

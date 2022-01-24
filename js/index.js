@@ -17,6 +17,12 @@ const nflTeams = {
     "pde": { name: "Philadelphia Eagles", color1: "#004C54", color2: "#ffffff" },
     "tnt": { name: "Tennessee Titans", color1: "#498DD4", color2: "#C00C2E" },
     "btr": { name: "Baltimore Ravens", color1: "#23166F", color2: "#99780C" },
+    "mnv": { name: "Minnesota Vikings", color1: "#4C109B", color2: "#F7B103" },
+    "sts": { name: "Seattle Seahawks", color1: "#00285B", color2: "#4BB736" },
+    "nos": { name: "New Orleans Saints", color1: "#CCB689", color2: "#000000" },
+    "nyg": { name: "New York Giants", color1: "#AD1A2D", color2: "#0B2163" },
+    "chb": { name: "Chicago Bears", color1: "#0B162A", color2: "#E34302" },
+    "mid": { name: "Miami Dolphins", color1: "#00808A", color2: "#FC4C01" },
 };
 
 const loading = "<div class='spinner-border text-primary' role='status'><span class='sr-only'>Loading...</span></div>";

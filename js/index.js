@@ -11,7 +11,7 @@ const nflTeams = {
     "tbb": { name: "Tampa Bay Buccaneers", color1: "#CE0A0A", color2: "#3b303c" },
     "lar": { name: "Los Angeles Rams", color1: "#1F368B", color2: "#E8C82E" },
     "cnb": { name: "Cincinnati Bengals", color1: "#F34D13", color2: "#000000" },
-    "kcc": { name: "Kansas City Chiefs", color1: "#FCCE0D", color2: "#DC1735" },
+    "kcc": { name: "Kansas City Chiefs", color1: "#DC1735", color2: "#FCCE0D" },
     "bfb": { name: "Buffalo Bills", color1: "#194787", color2: "#BF2026" },
     "lvr": { name: "Las Vegas Raiders", color1: "#010101", color2: "#9BA5A8" },
     "pde": { name: "Philadelphia Eagles", color1: "#004C54", color2: "#ffffff" },

@@ -1,8 +1,8 @@
 const MongoClient = require('mongodb').MongoClient;
-const url = "mongodb+srv://myMongoAdmin:CBWvii08!@cluster0.fvgkv.mongodb.net/Squares?retryWrites=true&w=majority";
-const dbName = 'Paya'
+const players = (req, res, league) => {
+    const url = require('../utilis/mongoHelper').getMongoConnectionString();
+    const dbName = league[0].toUpperCase() + league.substring(1);
 
-const players = (req, res) => {
     switch (req.method) {
         case 'GET':
             MongoClient.connect(url, function (err, client) {

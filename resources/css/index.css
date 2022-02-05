@@ -5,7 +5,7 @@ body{
    }
 
 header{
-    background: url(/img/football.jpg);
+    background: url(/resources//img/football.jpg);
     background-size: cover;
     background-position-y: 30%;
     color: antiquewhite;

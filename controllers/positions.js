@@ -1,8 +1,9 @@
 const MongoClient = require('mongodb').MongoClient;
 
 const positions = (req, res, league) => {
-    const url = require('../utilis/mongoHelper').getMongoConnectionString();
-    const dbName = league[0].toUpperCase() + league.substring(1);
+    const info = require('../utilis/mongoHelper').getMongoInfo(league);
+    const url = info.connectionString;
+    const dbName = info.dbName;
 
     switch (req.method) {
         case 'GET':

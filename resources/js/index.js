@@ -205,6 +205,7 @@ function populatePlayers(shuffleBoard) {
             playersCard.html(list);
             playersCard.append(`<div class='text-center'>Current Quarterly Payout = <span id="qPay" class="text-success"></span></div>`);
             playersCard.append(`<div class='text-center'>Current Total Pot = <span id="tPay" class="text-success"></span></div>`);
+            setSettings();
         });
 }
 

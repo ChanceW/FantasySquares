@@ -15,7 +15,14 @@ router.route('/resources/*').all(function (req, res) {
     res.write(html);
     res.end();
 });
-router.route('/:league/game').all(function (req, res) {
+router.route('/:league/board').all(function (req, res) {
+    console.log(`Welcome to the ${req.params.league} league`);
+    html = fs.readFileSync('index.html');
+    res.writeHead(200);
+    res.write(html);
+    res.end();
+});
+router.route('/:league').all(function (req, res) {
     console.log(`Welcome to the ${req.params.league} league`);
     html = fs.readFileSync('index.html');
     res.writeHead(200);

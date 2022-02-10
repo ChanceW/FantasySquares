@@ -1,5 +1,13 @@
 module.exports = {
-    getMongoConnectionString: function () {
-        return `mongodb+srv://myMongoAdmin:CBWvii08!@cluster0.fvgkv.mongodb.net/`;
+    getMongoInfo: function (league) {
+        return {
+            connectionString: `mongodb+srv://myMongoAdmin:CBWvii08!@cluster0.fvgkv.mongodb.net/`,
+            dbName: mongoDbMapping[league.toLowerCase()]
+        };
     }
+};
+
+const mongoDbMapping = {
+    dahomies: "DaHomies",
+    paya: "Paya"
 };

@@ -46,10 +46,12 @@ function setTeams() {
 }
 
 function setColors(awayTeam, homeTeam) {
-    document.documentElement.style.setProperty("--away", awayTeam.color1)
-    document.documentElement.style.setProperty("--home", homeTeam.color1)
-    document.documentElement.style.setProperty("--away2", awayTeam.color2)
-    document.documentElement.style.setProperty("--home2", homeTeam.color2)
+    if (awayTeam && homeTeam) {
+        document.documentElement.style.setProperty("--away", awayTeam.color1)
+        document.documentElement.style.setProperty("--home", homeTeam.color1)
+        document.documentElement.style.setProperty("--away2", awayTeam.color2)
+        document.documentElement.style.setProperty("--home2", homeTeam.color2)
+    }
 }
 
 function login() {

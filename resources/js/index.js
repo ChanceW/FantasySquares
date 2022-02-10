@@ -34,15 +34,18 @@ function populatePlayersNflTeams() {
 }
 
 function setTeams() {
-    const awayTeam = nflTeams[savedSettings.awayTeam];
-    const homeTeam = nflTeams[savedSettings.homeTeam];
-    setColors(awayTeam, homeTeam);
-    $("#awayTeam").val(savedSettings.awayTeam);
-    $("#homeTeam").val(savedSettings.homeTeam);
-    $("#awayHeader").html(`Away - ${awayTeam.name}`);
-    $("#homeHeader").html(`Home - ${homeTeam.name}`);
-    $(".cScore").attr("placeholder", awayTeam.name.split(" ")[awayTeam.name.split(" ").length - 1])
-    $(".rScore").attr("placeholder", homeTeam.name.split(" ")[homeTeam.name.split(" ").length - 1])
+    if (savedSettings.awayTeam && savedSettings.homeTeam) {
+        const awayTeam = nflTeams[savedSettings.awayTeam];
+        const homeTeam = nflTeams[savedSettings.homeTeam];
+        setColors(awayTeam, homeTeam);
+        $("#awayTeam").val(savedSettings.awayTeam);
+        $("#homeTeam").val(savedSettings.homeTeam);
+        $("#awayHeader").html(`Away - ${awayTeam.name}`);
+        $("#homeHeader").html(`Home - ${homeTeam.name}`);
+        $(".cScore").attr("placeholder", awayTeam.name.split(" ")[awayTeam.name.split(" ").length - 1])
+        $(".rScore").attr("placeholder", homeTeam.name.split(" ")[homeTeam.name.split(" ").length - 1])
+    }
+
 }
 
 function setColors(awayTeam, homeTeam) {

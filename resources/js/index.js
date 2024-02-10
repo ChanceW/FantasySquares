@@ -4,6 +4,8 @@ let q2Positons = [];
 let q3Positons = [];
 let q4Positons = [];
 let savedSettings = {};
+let isAdmin = false;
+
 const nflTeams = {
   "": { name: "Pick a Team", color1: "#ffffff", color2: "#000000" },
   sf4: { name: "San Francisco 49ers", color1: "#af1e2c", color2: "#ffffff" },
@@ -77,27 +79,29 @@ function login() {
     .then((response) => response.json())
     .then((data) => {
       if (data.isAdmin) {
+        isAdmin = true;
         $("#loginModal").modal("hide");
         $(".adminRow").removeClass("d-none");
+        checkLock();
       } else {
         alert("Not Admin");
       }
     });
 }
 
-function checklock() {
-  if (savedSettings.isLocked === "true") {
-    $("#btnLock").addClass("active");
-    $("#btnUnlock").removeClass("active");
-
-    $(".btn.remove, .btn.add").addClass("d-none");
-    $(".btn.lock").removeClass("d-none");
-  } else {
+function checkLock() {
+  if (isAdmin) {
     $("#btnLock").removeClass("active");
     $("#btnUnlock").addClass("active");
 
     $(".btn.remove, .btn.add").removeClass("d-none");
     $(".btn.lock").addClass("d-none");
+  } else {
+    $("#btnLock").addClass("active");
+    $("#btnUnlock").removeClass("active");
+
+    $(".btn.remove, .btn.add").addClass("d-none");
+    $(".btn.lock").removeClass("d-none");
   }
 }
 

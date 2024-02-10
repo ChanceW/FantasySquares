@@ -96,6 +96,8 @@ function checkLock() {
 
     $(".btn.remove, .btn.add").removeClass("d-none");
     $(".btn.lock").addClass("d-none");
+
+    $("#ruleEdit").removeClass("d-none");
   } else {
     $("#btnLock").addClass("active");
     $("#btnUnlock").removeClass("active");

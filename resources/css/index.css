@@ -1,90 +1,92 @@
+body {
+  font-family: "Bungee Inline", cursive;
+}
 
-
-body{
-    font-family: 'Bungee Inline', cursive;
-   }
-
-header{
-    background: url(/resources//img/football.jpg);
-    background-size: cover;
-    background-position-y: 30%;
-    color: antiquewhite;
+header {
+  background: url(/resources//img/football.jpg);
+  background-size: cover;
+  background-position-y: 30%;
+  color: antiquewhite;
 }
 
 .jumbotron-fluid {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
-.players li{
-    display: inline;
-    margin: 5px;
-    color: darkred;
-    white-space: nowrap;
+.players li {
+  display: inline;
+  margin: 5px;
+  color: darkred;
+  white-space: nowrap;
 }
 
-.stick
-{
-    position:sticky;
-    left:0px;
+.stick {
+  position: sticky;
+  left: 0px;
 }
 
-.bg-dark{
-    color: white;
+.bg-dark {
+  color: white;
 }
 
-.legend ul{
-    list-style: none;
-    padding: 0;
+.legend ul {
+  list-style: none;
+  padding: 0;
 }
 
-.legend li{
-    border: 1px outset black;
-    vertical-align: middle;
-    padding-top: 5px;
+.legend li {
+  border: 1px outset black;
+  vertical-align: middle;
+  padding-top: 5px;
 }
 
-.bg-away{
-    background-color: var(--away);
-    color: var(--away2);
+.bg-away {
+  background-color: var(--away);
+  color: var(--away2);
 }
 
-.bg-home{
-    background-color: var(--home);
-    color: var(--home2);
+.bg-home {
+  background-color: var(--home);
+  color: var(--home2);
 }
 
-.fore-away{
-    color: var(--away);
+.fore-away {
+  color: var(--away);
 }
 
-.fore-home{
-    color: var(--home);
+.fore-home {
+  color: var(--home);
 }
 
-.positions th, .positions td{
-    text-align: center;
+.positions th,
+.positions td {
+  text-align: center;
 }
 
-#howTo input, #howTo .save, #howTo .addRule{
-    display: none;
+#howTo input,
+#howTo .save,
+#howTo .addRule {
+  display: none;
 }
 
-#howTo.edit input, #howTo.edit .save, #howTo.edit .addRule{
-    display: block;
+#howTo.edit input,
+#howTo.edit .save,
+#howTo.edit .addRule {
+  display: block;
 }
 
-#howTo.edit li span{
-    display: none;
+#howTo.edit li span {
+  display: none;
 }
 
-.winnerCell{
-    background: #28a745
+.winnerCell {
+  background: #28a745;
 }
 
-.colorpick-eyedropper-input-trigger{
-    display: none;
+.colorpick-eyedropper-input-trigger {
+  display: none;
 }
 
-.teamPicker{
-    padding: 0;
+.teamPicker {
+  padding: 0;
 }
